@@ -31,7 +31,7 @@ $(document).ready(function () {
         this.set_parent = function (parent) { //done
             if (parent) {
                 this.parent = parent;
-                //this.parent.children.push(this)
+                //this.parent.children.push(this) //пуш пищет не функция
             }
             return parent;
         };
