@@ -15,13 +15,7 @@ $(document).ready(function () {
         this._removeChildren = function () {    //done
             if (this.children) {
                 for (var i = 0; i < this.children.length; i++) {
-                    //разные вариации удаления дивов детей
-                    //$('".'+this.children[i].name+'"').remove();
-                    //$( "div" ).remove( '".'+this.children[i].name+'"');
-                    //$("div").find("'."+this.children[i].name+"'").remove();
-                    //$( "'div."+this.children[i].name+"'" ).remove();
                     this.children[i].del();
-                    //console.log($('".'+this.children[i]+'"').html())
                 }
 
             }
@@ -78,13 +72,15 @@ $(document).ready(function () {
     function drawCompany() {
         all_companies.forEach(function (company) {
             var baseDiv = $('<div class="company_div"></div>');
-            var f_set = $('<fieldset class="fset">');
             var remove_button = $('<div class="remButton">&#10006</div>');
-            var input_name = $('<label>Name: <input type="text" disabled class="companyName" value="' + company.name + '"></label>');
-            var input_cost = $('<label>Cost: <input type="number" disabled class="companyName" value="' + company.cost + '"></label>');
-            var input_total_cost = $('<label>Total Cost: <input type="number" disabled class="companyName" value="' + company.get_total_cost() + '"></label>');
-            $(f_set).append(remove_button, input_name, input_cost, input_total_cost);
-            $(baseDiv).append(f_set);
+            var f_set = $('<fieldset class="fset">');
+
+            var input_name = $('<label>Name: <input type="text" class="companyName" value="' + company.name + '"></label>');
+            var input_cost = $('<label>Cost: <input type="number" class="companyName" value="' + company.cost + '"></label>');
+            var input_total_cost = $('<label>Total Cost: <input type="number" class="companyName" value="' + company.get_total_cost() + '"></label>');
+            $('input').prop('disabled', true);
+            $(f_set).append(input_name, input_cost, input_total_cost);
+            $(baseDiv).append(remove_button, f_set);
             $(baseDiv).addClass(company.name); //для связывания с штмл, добавление класса по имени
             if (!!company.parent.name) {
                 $(baseDiv).addClass('child');
@@ -97,13 +93,14 @@ $(document).ready(function () {
 //draw new company
     function drawNewCompany(company) {
         var baseDiv = $('<div class="company_div"></div>');
-        var f_set = $('<fieldset class="fset">');
         var remove_new_button = $('<div class="remButton">&#10006</div>');
-        var input_name = $('<label>Name: <input type="text" disabled class="companyName" value="' + company.name + '"></label>');
-        var input_cost = $('<label>Cost: <input type="number" disabled class="companyCost" value="' + company.cost + '"></label>');
-        var input_total_cost = $('<label>Total Cost: <input type="number" disabled class="companyTotalCost" value="' + company.get_total_cost() + '"></label>');
-        $(f_set).append(remove_new_button, input_name, input_cost, input_total_cost);
-        $(baseDiv).append(f_set);
+        var f_set = $('<fieldset class="fset">');
+        var input_name = $('<label>Name: <input type="text" class="companyName" value="' + company.name + '"></label>');
+        var input_cost = $('<label>Cost: <input type="number" class="companyCost" value="' + company.cost + '"></label>');
+        var input_total_cost = $('<label>Total Cost: <input type="number" class="companyTotalCost" value="' + company.get_total_cost() + '"></label>');
+        $('input').prop('disabled', true);
+        $(f_set).append(input_name, input_cost, input_total_cost);
+        $(baseDiv).append(remove_new_button, f_set);
         $(baseDiv).addClass(company.name);
         if (!!company.parent.name) {
             $(baseDiv).addClass('child');
@@ -155,7 +152,7 @@ $(document).ready(function () {
     //дивы детей чтоб удалялись
     var button_del = $('.remButton');
     button_del.click(function (e) {
-        $(e.target).parent().parent().remove();
+        $(e.target).parent().remove();
         var delCompany = $(e.target).parent().find('.companyName').val();
         all_companies.forEach(function (company) {
             if (company.name == delCompany) {
@@ -168,12 +165,35 @@ $(document).ready(function () {
     });
 
     //redact company
+    //$('.company_div').dblclick(function (e) {
+    //    var redact = e.target;
+    //    //console.log(redact.parent()); //сделать, чтоб сохраняло в объект
+    //    $(redact).attr("disabled", false);
+    //    $(redact).focusout(function () {
+    //        var newInfo = $(this).val();
+    //    });
+    //});
+
+    //redact company
     $('.company_div').dblclick(function (e) {
         var redact = e.target;
-        //console.log(redact.parent()); //сделать, чтоб сохраняло в объект
+        var oldValue = e.target.value;
+        var fset = redact.closest('fieldset');
+        console.log(fset);
         $(redact).attr("disabled", false);
-        $(redact).focusout(function () {
-            var newInfo = $(this).val();
+        $('.companyTotalCost').hide();
+        $(redact).focusout(function (e) {
+            var newValue = e.target.value;
+            $('.companyTotalCost').hide();
+            var inp1 = $(fset[0]).find('input').value;
+            var inp2 = $(fset[1]).find('input').value;
+            var inp3 = $(fset[3]).find('input').value;
+            all_companies[2].name = inp1;
+            all_companies[2].name = inp2;
+            all_companies[2].name = inp3;
+
+// var all_fields$(redact).parents('.company_div').find('input')
+
         });
     });
 
@@ -183,7 +203,7 @@ $(document).ready(function () {
 
     });
 // созданные компании не редактируются
-    //рисовать иерархическое дерево
+    //рисовать иерархическое дерево elem.parents().скок родителей, такой и отступ
     //как называть каждую новую создавшуюся компанию
 
 });
