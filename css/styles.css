@@ -6,7 +6,6 @@
 .child {
     margin-left: 100px;
 }
-
 #company_div {
     width: 200px;
     height: 200px;
@@ -65,4 +64,10 @@
     background: black;
     opacity: 0.6;
     position: absolute;
+}
+
+.remButton {
+    width: 30px;
+    height: 30px;
+    float: right;
 }

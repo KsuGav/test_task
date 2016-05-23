@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var all_companies = [];
+    all_companies = [];
 
     function Company(name, cost) {
         this.new_state = true;
@@ -59,11 +59,11 @@ $(document).ready(function () {
         all_companies.push(this);
     }
 
-    var microsoft = new Company('Microsoft', 3000);
-    var skype = new Company('Skype', 2000);
-    var apple = new Company('Apple', 500);
-    var dada = new Company('dada', 200);
-    var nike = new Company('Nike', 1220);
+    microsoft = new Company('Microsoft', 3000);
+    skype = new Company('Skype', 2000);
+    apple = new Company('Apple', 500);
+    dada = new Company('dada', 200);
+    nike = new Company('Nike', 1220);
     skype.set_parent(microsoft);
     dada.set_parent(skype);
     apple.set_parent(dada);
@@ -101,10 +101,11 @@ $(document).ready(function () {
     function drawNewCompany(company) {
         var baseDiv = $('<div class="company_div"></div>');
         var f_set = $('<fieldset class="fset">');
+        var remove_button = $('<div class="remButton">&#10006</div>');
         var input_name = $('<label>Name: <input type="text" disabled class="companyName" value="' + company.name + '"></label>');
         var input_cost = $('<label>Cost: <input type="number" disabled class="companyName" value="' + company.cost + '"></label>');
         var input_total_cost = $('<label>Total Cost: <input type="number" disabled class="companyName" value="' + company.total_cost + '"></label>');
-        $(f_set).append(input_name, input_cost, input_total_cost);
+        $(f_set).append(remove_button, input_name, input_cost, input_total_cost);
         $(baseDiv).append(f_set);
         if (!!company.parent.name) {
             $(baseDiv).addClass('child');
@@ -152,21 +153,26 @@ $(document).ready(function () {
 
     //delete company
     //функция дел() тут не работает, отдельно работает
-    $('.fset').contextmenu(function (e) {
-        var del = e.target;
-        $(del).remove();
-        var delCompany = $(del).find('.companyName').val().toLowerCase();
-        //$(delCompany).del();
-        //all_companies[delCompany].del();
-        //for(var l=0;l<all_companies.length;l++){
-        if (skype.name === delCompany) {
-            skype.del();
-            //all_companies[l].del()
-            //}
-        }
-        //console.log(delCompany)
-        console.log(all_companies);
+    $('.remButton').on('click', function (e) {
+        console.log(e.target.parent());
+        $('.fset').remove()
     });
+
+    //$('.fset').contextmenu(function (e) {
+    //    var del = e.target;
+    //    $(del).remove();
+    //    var delCompany = $(del).find('.companyName').val().toLowerCase();
+    //    //$(delCompany).del();
+    //    //all_companies[delCompany].del();
+    //    //for(var l=0;l<all_companies.length;l++){
+    //    if (skype.name === delCompany) {
+    //        skype.del();
+    //        //all_companies[l].del()
+    //        //}
+    //    }
+    //    //console.log(delCompany)
+    //    console.log(all_companies);
+    //});
 
     //redact company
     $('.company_div').dblclick(function (e) {
