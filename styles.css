@@ -1,0 +1,68 @@
+
+.first {
+    margin-left: 50px;
+}
+
+.child {
+    margin-left: 100px;
+}
+
+#company_div {
+    width: 200px;
+    height: 200px;
+    /*display: none;*/
+    border: 1px solid black;
+    z-index: 0;
+}
+
+#show_comp {
+    width: 200px;
+    height: 200px;
+    /*display: none;*/
+}
+
+.company_div {
+    display: table;
+}
+
+.fset input {
+    display: table;
+}
+
+#redact_company {
+    /*display: none;*/
+}
+
+#redact {
+    /*display: none;*/
+}
+
+.create_div {
+    position: relative;
+    margin-left: 40%;
+    margin-top: -45%;
+    width: 225px;
+    border-radius: 10px;
+    z-index: 9;
+}
+
+.create_div fieldset {
+    border-radius: 10px;
+    padding: 15px;
+    height: 125px;
+}
+
+#save_create {
+    margin-left: 40%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.popupDiv {
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+    background: black;
+    opacity: 0.6;
+    position: absolute;
+}
