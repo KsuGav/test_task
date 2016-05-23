@@ -7,7 +7,7 @@ $(document).ready(function () {
         this.name = name;
         this.cost = cost;
 
-        this.children = {};
+        this.children = [];
         this.parent = {};
 
         this.total_cost = 0;
@@ -83,10 +83,11 @@ $(document).ready(function () {
         all_companies.forEach(function (company) {
             var baseDiv = $('<div class="company_div"></div>');
             var f_set = $('<fieldset class="fset">');
+            var remove_button = $('<div class="remButton">&#10006</div>');
             var input_name = $('<label>Name: <input type="text" disabled class="companyName" value="' + company.name + '"></label>');
             var input_cost = $('<label>Cost: <input type="number" disabled class="companyName" value="' + company.cost + '"></label>');
             var input_total_cost = $('<label>Total Cost: <input type="number" disabled class="companyName" value="' + company.total_cost + '"></label>');
-            $(f_set).append(input_name, input_cost, input_total_cost);
+            $(f_set).append(remove_button, input_name, input_cost, input_total_cost);
             $(baseDiv).append(f_set);
             if (!!company.parent.name) {
                 $(baseDiv).addClass('child');
@@ -101,11 +102,11 @@ $(document).ready(function () {
     function drawNewCompany(company) {
         var baseDiv = $('<div class="company_div"></div>');
         var f_set = $('<fieldset class="fset">');
-        var remove_button = $('<div class="remButton">&#10006</div>');
+        var remove_new_button = $('<div class="remButton">&#10006</div>');
         var input_name = $('<label>Name: <input type="text" disabled class="companyName" value="' + company.name + '"></label>');
         var input_cost = $('<label>Cost: <input type="number" disabled class="companyName" value="' + company.cost + '"></label>');
         var input_total_cost = $('<label>Total Cost: <input type="number" disabled class="companyName" value="' + company.total_cost + '"></label>');
-        $(f_set).append(remove_button, input_name, input_cost, input_total_cost);
+        $(f_set).append(remove_new_button, input_name, input_cost, input_total_cost);
         $(baseDiv).append(f_set);
         if (!!company.parent.name) {
             $(baseDiv).addClass('child');
@@ -153,10 +154,15 @@ $(document).ready(function () {
 
     //delete company
     //функция дел() тут не работает, отдельно работает
-    $('.remButton').on('click', function (e) {
-        console.log(e.target.parent());
-        $('.fset').remove()
+    button_del = $('.remButton');
+    for (var i = 0; i < button_del.length; i++) {
+        button_del[i].click(function (e) {
+            console.log(button_del);
+            console.log(e.target);
+            $(e.target).remove()
     });
+    }
+
 
     //$('.fset').contextmenu(function (e) {
     //    var del = e.target;
@@ -177,7 +183,7 @@ $(document).ready(function () {
     //redact company
     $('.company_div').dblclick(function (e) {
         var redact = e.target;
-        console.log(redact.parent());
+        //console.log(redact.parent()); //сделать, чтоб сохраняло в объект
         $(redact).attr("disabled", false);
         $(redact).focusout(function () {
             var newInfo = $(this).val();
