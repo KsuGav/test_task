@@ -27,15 +27,6 @@
     display: table;
 }
 
-.create_div {
-    position: relative;
-    margin-left: 40%;
-    margin-top: -45%;
-    width: 225px;
-    border-radius: 10px;
-    z-index: 9;
-    background: lightgreen;
-}
 
 .pop_div {
     z-index: 2;
@@ -48,6 +39,16 @@
     position: absolute;
 }
 
+.create_div {
+    position: absolute;
+    margin-left: 40%;
+    /*margin-top: -10%;*/
+    width: 225px;
+    border-radius: 10px;
+    z-index: 9;
+    background: lightgreen;
+}
+
 .remButton, .remove_new_button {
     width: 30px;
     height: 30px;
@@ -56,7 +57,6 @@
 #company_div {
     width: 200px;
     height: 200px;
-    /*display: none;*/
     border: 1px solid black;
     z-index: 0;
 }
@@ -64,17 +64,7 @@
 #show_comp {
     width: 200px;
     height: 200px;
-    /*display: none;*/
 }
-
-#redact_company {
-    /*display: none;*/
-}
-
-#redact {
-    /*display: none;*/
-}
-
 #save_create {
     margin-left: 40%;
     margin-top: 10px;
