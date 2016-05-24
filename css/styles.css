@@ -1,4 +1,20 @@
 
+.fset {
+    pointer-events: none;
+    background: bisque;
+}
+
+.fset input {
+    display: table;
+}
+
+.create_div fieldset {
+    border-radius: 10px;
+    padding: 15px;
+    height: 125px;
+}
+
+
 .first {
     margin-left: 50px;
 }
@@ -6,34 +22,9 @@
 .child {
     margin-left: 100px;
 }
-#company_div {
-    width: 200px;
-    height: 200px;
-    /*display: none;*/
-    border: 1px solid black;
-    z-index: 0;
-}
-
-#show_comp {
-    width: 200px;
-    height: 200px;
-    /*display: none;*/
-}
 
 .company_div {
     display: table;
-}
-
-.fset input {
-    display: table;
-}
-
-#redact_company {
-    /*display: none;*/
-}
-
-#redact {
-    /*display: none;*/
 }
 
 .create_div {
@@ -44,18 +35,6 @@
     border-radius: 10px;
     z-index: 9;
     background: lightgreen;
-}
-
-.create_div fieldset {
-    border-radius: 10px;
-    padding: 15px;
-    height: 125px;
-}
-
-#save_create {
-    margin-left: 40%;
-    margin-top: 10px;
-    border-radius: 10px;
 }
 
 .pop_div {
@@ -74,7 +53,33 @@
     height: 30px;
     float: right;
 }
+#company_div {
+    width: 200px;
+    height: 200px;
+    /*display: none;*/
+    border: 1px solid black;
+    z-index: 0;
+}
 
-/*.fset{*/
-/*disabled: true;*/
-/*}*/
+#show_comp {
+    width: 200px;
+    height: 200px;
+    /*display: none;*/
+}
+
+#redact_company {
+    /*display: none;*/
+}
+
+#redact {
+    /*display: none;*/
+}
+
+#save_create {
+    margin-left: 40%;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+
+
