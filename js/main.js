@@ -155,13 +155,13 @@ $(document).ready(function () {
         $(baseDiv).attr('id', company.guid);
         var classParent = company.parent.name;
         //var parent = $('div').find('".'+classParent+'"');
-        var parent = $('div').hasClass(classParent);
-        if (parent) {
-            $(parent).append(baseDiv);
+        //var parent = $('div').hasClass(classParent);
+        //if (parent) {
+        //    $(parent).append(baseDiv);
             //$(baseDiv).addClass(company.parent.name);
-        }
+        //}
         //return baseDiv;
-        //$('body')
+        $('body').append(baseDiv);
     }
 
     //create_company
