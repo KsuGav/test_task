@@ -1,4 +1,3 @@
-
 .fset {
     pointer-events: none;
     background: bisque;
@@ -14,7 +13,6 @@
     height: 125px;
 }
 
-
 .first {
     margin-left: 50px;
 }
@@ -26,7 +24,6 @@
 .company_div {
     display: table;
 }
-
 
 .pop_div {
     z-index: 2;
@@ -47,6 +44,11 @@
     border-radius: 10px;
     z-index: 9;
     background: lightgreen;
+}
+
+.remButton {
+    position: absolute;
+    margin-left: 185px;
 }
 
 .remButton, .remove_new_button {

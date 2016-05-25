@@ -12,7 +12,7 @@ $(document).ready(function () {
 
         this.total_cost;
 
-        this._removeChildren = function () {    //done
+        this._removeChildren = function () {
             if (this.children) {
                 for (var i = 0; i < this.children.length; i++) {
                     this.children[i].del();
@@ -21,14 +21,14 @@ $(document).ready(function () {
             }
         };
 
-        this.del = function () { //done
+        this.del = function () {
             this._removeChildren();
             var k = all_companies.indexOf(this);
             all_companies.splice(k, 1);
             return all_companies;
         };
 
-        this.set_parent = function (parent) { //done
+        this.set_parent = function (parent) {
             if (parent) {
                 this.parent = parent;
                 this.parent.children.push(this);
@@ -36,22 +36,11 @@ $(document).ready(function () {
             return parent;
         };
 
-        this.total_cost_child = function () {
-            if (this.children) {
-                var total = 0;
-                for (var i = 0; i < this.children.length; i++) {
-                    total += this.children[i].cost;
-                }
-                return total;
-            }
-        };
-
-        this.get_total_cost = function () { //done
+        this.get_total_cost = function () {
             var sum = cost;
-            var cost_child = parseInt(this.children);
+            var cost_child = this.children;
             for (var i = 0; i < cost_child.length; i++) {
-                sum += cost_child[i].cost;
-                sum += cost_child[i].total_cost_child();
+                sum += cost_child[i].get_total_cost();
             }
             return this.total_cost = sum;
 
@@ -79,7 +68,7 @@ $(document).ready(function () {
     dada.set_parent(skype);
     apple.set_parent(microsoft);
 
-    //вывод компаний первого уровня(родителей)
+    //draw companies of the first level(parents company)
     function listParent() {
         all_companies.forEach(function (company) {
             var v = _.each(company.parent, function (num, key) {
@@ -94,11 +83,10 @@ $(document).ready(function () {
                 })
                 .value();
             if (parent.length == 0) {
-                drawParentCompany(company);
+                drawNewCompany(company);
             }
         })
     }
-
     listParent();
 
     //draw new companies
@@ -112,18 +100,13 @@ $(document).ready(function () {
             var input_total_cost = $('<label>Total Cost: <input type="number" class="companyTotalCost" value="' + company.get_total_cost() + '"></label>');
             $(f_set).append(input_name, input_cost, input_total_cost);
             $(baseDiv).append(remove_button, f_set);
-            $(baseDiv).addClass(company.name); //для связывания с штмл, добавление класса по имени
-            if (!!company.parent.name) {
-                $(baseDiv).css('margin-left', '200px');
-                //$(baseDiv).addClass('child');
-            }
-            //return baseDiv;
+            $(baseDiv).addClass(company.name);
             $('body').append(baseDiv);
         });
     }
 
 //draw main company
-    function drawParentCompany(company) {
+    function drawNewCompany(company) {
         var baseDiv = $('<div class="company_div"></div>');
         var remove_new_button = $('<div class="remButton">&#10006</div>');
         var f_set = $('<fieldset class="fset">');
@@ -134,35 +117,13 @@ $(document).ready(function () {
         $(baseDiv).append(remove_new_button, f_set);
         $(baseDiv).addClass(company.name);
         $(baseDiv).attr('id', company.guid);
-        //if (!!company.parent.name) {
-        //    $(baseDiv).addClass('child');
-        //}
-        //return baseDiv;
+        if (!!company.parent.name) {
+            $(baseDiv).css('margin-left', '200px');
+            $(baseDiv).addClass('child');
+        }
         $('body').append(baseDiv);
     }
 
-    //draw child company
-    function drawChildCompany(company) {
-        var baseDiv = $('<div class="company_div"></div>');
-        var remove_new_button = $('<div class="remButton">&#10006</div>');
-        var f_set = $('<fieldset class="fset">');
-        var input_name = $('<label>Name: <input type="text" class="companyName" value="' + company.name + '"></label>');
-        var input_cost = $('<label>Cost: <input type="number" class="companyCost" value="' + company.cost + '"></label>');
-        var input_total_cost = $('<label>Total Cost: <input type="number" class="companyTotalCost" value="' + company.get_total_cost() + '"></label>');
-        $(f_set).append(input_name, input_cost, input_total_cost);
-        $(baseDiv).append(remove_new_button, f_set);
-        $(baseDiv).addClass(company.name);
-        $(baseDiv).attr('id', company.guid);
-        var classParent = company.parent.name;
-        //var parent = $('div').find('".'+classParent+'"');
-        //var parent = $('div').hasClass(classParent);
-        //if (parent) {
-        //    $(parent).append(baseDiv);
-            //$(baseDiv).addClass(company.parent.name);
-        //}
-        //return baseDiv;
-        $('body').append(baseDiv);
-    }
 
     //create_company
     $('#addCompany').click(function () {
@@ -209,6 +170,7 @@ $(document).ready(function () {
         all_companies.forEach(function (company) {
             if (company.name == delCompany) {
                 company.del();
+                console.log(company.parent.children);
                 for (var t = 0; t < company.parent.children.length; t++) {
                     if (company.parent.children[t].name == company.name) {
                         company.parent.children.splice(t, 1)
@@ -248,7 +210,7 @@ $(document).ready(function () {
         });
     });
 
-    //вывод детей при клике на родителя
+    //show childrens by click on their parent
     $(document).on('click', '.company_div', function (e) {
         var parent = $(e.target).attr('class').split(' ')[1];
         for (var m = 0; m < all_companies.length; m++) {
@@ -265,25 +227,8 @@ $(document).ready(function () {
             return (key + ":" + num);
         });
         for (var f = 0; f < v.length; f++) {
-            drawChildCompany(v[f]);
+            drawNewCompany(v[f]);
         }
     }
-
-
-    //$( ".inner" ).after( "<p>Test</p>" );
-
-    //1 (при любом изменении - обновлялась вся инфа):
-    //-при добавлении новой компании или редактировании, чтобы пересчитывался тотал кост
-    //-у родителей и детей перезаписывал измененные имена
-    //2рисовать иерархическое дерево c отступами отступ
-
-    //find company for redact
-    //function findCompany(some_name) {
-    //    for (var i = 0; i < all_companies.length; i++) {
-    //        if (some_name == all_companies[i].name) {
-    //            return all_companies[i]
-    //        }
-    //    }
-    //}
 
 });
